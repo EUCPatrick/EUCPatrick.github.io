@@ -2,45 +2,68 @@
 <html lang="en">
 <head>
 
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- Basic Page Needs -->
   <meta charset="utf-8">
-  <title>EUC Patrick Azure Registration </title>
-  <meta name="description" content="Web Widget for Launcher to Register to Azure">
+  <title>EUC Patrick Azure Registration</title>
+  <meta name="description" content="Web Widget Register to Azure">
   <meta name="author" content="Patrick Zoeller">
 
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- FONT -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- CSS -->
   <link rel="stylesheet" href="CSS/normalize.css">
   <link rel="stylesheet" href="CSS/skeleton.css">
 
-  <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <script>
+    // Function to detect the device type
+    function getDeviceType() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      if (/android/i.test(userAgent)) {
+        return "Android";
+      } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+      } else {
+        return "Other";
+      }
+    }
+
+    // Render the appropriate button
+    function renderButton() {
+      const deviceType = getDeviceType();
+      const buttonContainer = document.getElementById("button-container");
+
+      if (deviceType === "Android") {
+        buttonContainer.innerHTML = `<a class="button button-primary" href="awagent://com.airwatch.androidagent?component=conditionalaccess&partnertype=microsoft">Register on Android</a>`;
+      } else if (deviceType === "iOS") {
+        buttonContainer.innerHTML = `<a class="button button-primary" href="airwatch://conditionalaccess?partner=microsoft">Register on iOS</a>`;
+      } else {
+        buttonContainer.innerHTML = `<a class="button button-primary" href="wsonehub://conditionalaccess?partner=microsoft">Register</a>`;
+      }
+    }
+
+    // Run the render function on page load
+    window.onload = renderButton;
+  </script>
 
 </head>
 <body>
 
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row" style="text-align: center;">
       <div style="margin-top: 5%; "></div>
       <p>Register your Workspace ONE Managed Device to Azure now</p>
-        <a class="button button-primary" href="awagent://com.airwatch.androidagent?component=conditionalaccess&partnertype=microsoft">Register now</a>
+      <div id="button-container">
+        <!-- Button will be dynamically added here -->
       </div>
     </div>
   </div>
 
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
 </html>
